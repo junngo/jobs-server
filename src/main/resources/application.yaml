@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  jpa:
+    show-sql: true
+    generate-ddl: true  # 초기 개발/로컬 true 사용 주의
+    hibernate:
+      ddl-auto: create  # 초기 개발/로컬 create 사용 주의
