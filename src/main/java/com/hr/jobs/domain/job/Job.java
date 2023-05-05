@@ -1,8 +1,7 @@
 package com.hr.jobs.domain.job;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
 @EntityListeners(AuditingEntityListener.class)
@@ -32,11 +34,11 @@ public class Job {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany
-    private List<SubDesc> subDescList;
-
     @Column(nullable = false)
     private String city;
+
+    @OneToMany(mappedBy = "job")
+    private List<SubDesc> subDescList;
 
     @CreatedDate
     private LocalDateTime createdAt;

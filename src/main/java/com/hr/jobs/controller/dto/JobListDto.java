@@ -1,12 +1,12 @@
 package com.hr.jobs.controller.dto;
 
 import com.hr.jobs.domain.job.Job;
-import com.hr.jobs.domain.job.SubDesc;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -18,7 +18,7 @@ public class JobListDto {
 
     private String storedLogoName;
 
-    private List<SubDesc> subDescList;
+    private List<String> subDescList;
 
     private String city;
 
@@ -29,7 +29,11 @@ public class JobListDto {
                 .id(job.getId())
                 .companyName(job.getCompanyName())
                 .storedLogoName(job.getStoredLogoName())
-                .subDescList(job.getSubDescList())
+                .subDescList(
+                        job.getSubDescList()
+                                .stream()
+                                .map(subDesc -> subDesc.getDescription()).collect(Collectors.toList())
+                )
                 .city(job.getCity())
                 .createdAt(job.getCreatedAt())
                 .build();
