@@ -10,6 +10,7 @@ import com.hr.jobs.util.FileStore;
 import com.hr.jobs.util.UploadFileInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +26,13 @@ public class JobServiceImpl implements JobService {
     private final SubDescRepository subDescRepository;
     private final FileStore fileStore;
 
+    @Value("${file.download.url}")
+    private String fileUrl;
+
     @Override
     public List<JobListDto> getJobList() {
         return jobRepository.findByAllJobWithFetchJoin()
-                .stream().map(JobListDto::from)
+                .stream().map(job -> JobListDto.from(job, fileUrl))
                 .collect(Collectors.toList());
     }
 

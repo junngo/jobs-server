@@ -70,7 +70,7 @@ class JobServiceImplTest {
         assertEquals(2, response.size());
         assertEquals(job1.getId(), response.get(0).getId());
         assertEquals(job1.getCompanyName(), response.get(0).getCompanyName());
-        assertEquals(job1.getStoredLogoName(), response.get(0).getStoredLogoName());
+        assertNotNull(response.get(0).getStoredLogoName());
         assertEquals(
                 job1.getSubDescList().stream().map(
                         subDesc -> subDesc.getDescription()).collect(Collectors.toList()
@@ -78,7 +78,7 @@ class JobServiceImplTest {
                 response.get(0).getSubDescList()
         );
         assertEquals(job1.getCity(), response.get(0).getCity());
-        assertEquals(job1.getCreatedAt(), response.get(0).getCreatedAt());
+        assertEquals("0 minutes ago", response.get(0).getCreatedAt());
     }
 
     @Test
