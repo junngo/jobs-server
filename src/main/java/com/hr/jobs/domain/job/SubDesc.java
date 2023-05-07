@@ -1,8 +1,14 @@
 package com.hr.jobs.domain.job;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Builder
 @Table
 @Entity
@@ -12,5 +18,8 @@ public class SubDesc {
     @Id
     private Long id;
 
-    private String desc;
+    @ManyToOne
+    private Job job;
+
+    private String description;
 }
