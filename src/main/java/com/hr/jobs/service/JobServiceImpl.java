@@ -1,6 +1,7 @@
 package com.hr.jobs.service;
 
 import com.hr.jobs.controller.dto.CreateJobDto;
+import com.hr.jobs.controller.dto.JobDetailDto;
 import com.hr.jobs.controller.dto.JobListDto;
 import com.hr.jobs.domain.job.Job;
 import com.hr.jobs.domain.job.JobRepository;
@@ -52,5 +53,12 @@ public class JobServiceImpl implements JobService {
             );
         }
         return CreateJobDto.Response.from(job);
+    }
+
+    @Override
+    public JobDetailDto getJobDetail(Long jobId) {
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new RuntimeException("Not Found Data"));
+        return JobDetailDto.from(job);
     }
 }

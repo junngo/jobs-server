@@ -1,6 +1,7 @@
 package com.hr.jobs.controller;
 
 import com.hr.jobs.controller.dto.CreateJobDto;
+import com.hr.jobs.controller.dto.JobDetailDto;
 import com.hr.jobs.controller.dto.JobListDto;
 import com.hr.jobs.service.JobService;
 import com.hr.jobs.util.FileStore;
@@ -29,7 +30,7 @@ public class JobController {
     }
 
     @PostMapping("/job")
-    public ResponseEntity<CreateJobDto.Response> createUser (
+    public ResponseEntity<CreateJobDto.Response> createJob (
             @Valid @ModelAttribute CreateJobDto.Request request
     ) {
         return ResponseEntity.ok(
@@ -50,5 +51,13 @@ public class JobController {
     ) throws IOException {
         Resource resource = new UrlResource("file:" + fileStore.getFileFullPath(filename));
         return ResponseEntity.ok(resource);
+    }
+
+    @GetMapping("/job/{jobId}")
+    public ResponseEntity<JobDetailDto> getJob(@PathVariable Long jobId) {
+        System.out.println(jobId);
+        return ResponseEntity.ok(
+                jobService.getJobDetail(jobId)
+        );
     }
 }

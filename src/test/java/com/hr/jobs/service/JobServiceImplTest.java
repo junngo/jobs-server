@@ -1,6 +1,7 @@
 package com.hr.jobs.service;
 
 import com.hr.jobs.controller.dto.CreateJobDto;
+import com.hr.jobs.controller.dto.JobDetailDto;
 import com.hr.jobs.controller.dto.JobListDto;
 import com.hr.jobs.domain.job.Job;
 import com.hr.jobs.domain.job.JobRepository;
@@ -16,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -102,5 +104,41 @@ class JobServiceImplTest {
         // then
         assertNotNull(response);
         assertEquals(job.getId(), response.getId());
+    }
+
+    @Test
+    public void get_job_detail_success() {
+        // given
+        Long jobId = 1L;
+        List<SubDesc> subDescList = Arrays.asList(
+                SubDesc.builder().description("Java").build(),
+                SubDesc.builder().description("Spring Boot").build()
+        );
+        Job job = Job.builder()
+                .id(1L)
+                .companyName("Job Company")
+                .storedLogoName("logo file")
+                .description("job description")
+                .subDescList(subDescList)
+                .city("LA")
+                .createdAt(LocalDateTime.now())
+                .build();
+        given(jobRepository.findById(any()))
+                .willReturn(Optional.of(job));
+
+        // when
+        JobDetailDto response = jobService.getJobDetail(jobId);
+
+        // then
+        assertEquals(job.getCompanyName(), response.getCompanyName());
+        assertEquals(job.getDescription(), response.getDescription());
+        assertEquals(job.getCity(), response.getCity());
+        assertEquals(
+                job.getSubDescList().stream().map(
+                        subDesc -> subDesc.getDescription()).collect(Collectors.toList()
+                ),
+                response.getSubDescList()
+        );
+        assertEquals("0 minutes ago", response.getCreatedAt());
     }
 }
