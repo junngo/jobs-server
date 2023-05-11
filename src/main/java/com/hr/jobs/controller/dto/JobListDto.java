@@ -18,6 +18,8 @@ public class JobListDto {
 
     private String companyName;
 
+    private String jobTitle;
+
     private String storedLogoName;
 
     private List<String> subDescList;
@@ -54,6 +56,7 @@ public class JobListDto {
         return JobListDto.builder()
                 .id(job.getId())
                 .companyName(job.getCompanyName())
+                .jobTitle(job.getJobTitle())
                 .storedLogoName(fileFullUrl)
                 .subDescList(
                         job.getSubDescList()

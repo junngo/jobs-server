@@ -17,6 +17,8 @@ public class JobDetailDto {
 
     private String companyName;
 
+    private String jobTitle;
+
     private String description;
 
     private String city;
@@ -47,6 +49,7 @@ public class JobDetailDto {
 
         return JobDetailDto.builder()
                 .companyName(job.getCompanyName())
+                .jobTitle(job.getJobTitle())
                 .description(job.getDescription())
                 .subDescList(
                         job.getSubDescList()
