@@ -27,6 +27,9 @@ public class Job {
     @Column(nullable = false)
     private String companyName;
 
+    @Column(nullable = false)
+    private String jobTitle;
+
     private String logoName;
 
     private String storedLogoName;

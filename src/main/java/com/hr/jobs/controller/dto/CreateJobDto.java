@@ -18,6 +18,9 @@ public class CreateJobDto {
         @NotNull
         private String companyName;
 
+        @NotNull
+        private String jobTitle;
+
         private MultipartFile logoImage;
 
         @NotNull
@@ -31,6 +34,7 @@ public class CreateJobDto {
         public Job toEntity(UploadFileInfo fileInfo) {
             return Job.builder()
                     .companyName(companyName)
+                    .jobTitle(jobTitle)
                     .logoName(fileInfo.getOriginFilename())
                     .storedLogoName(fileInfo.getStoredFilename())
                     .description(description)
