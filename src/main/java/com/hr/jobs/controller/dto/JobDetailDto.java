@@ -1,7 +1,6 @@
 package com.hr.jobs.controller.dto;
 
 import com.hr.jobs.domain.job.Job;
-import com.hr.jobs.domain.job.SubDesc;
 import lombok.Builder;
 import lombok.Getter;
 
