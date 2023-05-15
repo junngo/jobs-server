@@ -1,5 +1,6 @@
 package com.hr.jobs.service;
 
+import com.hr.jobs.controller.dto.MemberDto;
 import com.hr.jobs.controller.dto.SignInDto;
 import com.hr.jobs.controller.dto.SignUpDto;
 import com.hr.jobs.domain.member.Member;
@@ -32,5 +33,12 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByEmailAndPassword(request.getEmail(), request.getPassword())
                 .orElseThrow(() -> new RuntimeException("Login failed."));
         return SignInDto.Response.from(member, tokenProvider.create(member));
+    }
+
+    @Override
+    public MemberDto getMemberInfo(String request) {
+        Member member = memberRepository.findById(Long.parseLong(request))
+                .orElseThrow(() -> new RuntimeException("User not exist"));
+        return MemberDto.from(member);
     }
 }

@@ -26,9 +26,12 @@ public class SecurityConfig {
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .headers().frameOptions().sameOrigin()
+                .and()
                 .authorizeHttpRequests(authorize -> authorize
 //                        .requestMatchers("/", "/signup", "/signin").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
+//                        .anyRequest().authenticated()
                 );
         http.addFilterAfter(
                 jwtAuthenticationFilter,
