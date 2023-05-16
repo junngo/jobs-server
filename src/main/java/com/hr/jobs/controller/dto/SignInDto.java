@@ -27,10 +27,12 @@ public class SignInDto {
     public static class Response {
         private String token;
         private String username;
+        private String email;
 
         public static SignInDto.Response from(Member member, String token) {
             return Response.builder()
                     .username(member.getUsername())
+                    .email(member.getEmail())
                     .token(token)
                     .build();
         }
