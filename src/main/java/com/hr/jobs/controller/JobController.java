@@ -1,5 +1,6 @@
 package com.hr.jobs.controller;
 
+import com.hr.jobs.controller.dto.ApplyDto;
 import com.hr.jobs.controller.dto.CreateJobDto;
 import com.hr.jobs.controller.dto.JobDetailDto;
 import com.hr.jobs.controller.dto.JobListDto;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -46,7 +48,7 @@ public class JobController {
      * @throws IOException
      */
     @GetMapping("/download/{filename}")
-    public ResponseEntity<Resource> downloadImage(
+    public ResponseEntity<Resource> downloadImage (
             @PathVariable final String filename
     ) throws IOException {
         Resource resource = new UrlResource("file:" + fileStore.getFileFullPath(filename));
@@ -55,9 +57,18 @@ public class JobController {
 
     @GetMapping("/job/{jobId}")
     public ResponseEntity<JobDetailDto> getJob(@PathVariable Long jobId) {
-        System.out.println(jobId);
         return ResponseEntity.ok(
                 jobService.getJobDetail(jobId)
+        );
+    }
+
+    @PostMapping("/apply")
+    public ResponseEntity<ApplyDto.Response> applyJob (
+            @Valid @ModelAttribute ApplyDto.Request request,
+            @AuthenticationPrincipal String memberId
+    ) {
+        return ResponseEntity.ok(
+                jobService.applyJob(request, memberId)
         );
     }
 }
